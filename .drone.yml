@@ -31,17 +31,12 @@ steps:
 trigger:
   event:
     - tag
-
 ---
-
 kind: secret
-name: docker_username
-data: cRILPiMnM6n7vPKLMd4cE4b67TYU/5IB+5nW6iXW3ZeKA4pc3vWdug==
-
+name: npm_access_token
+data: Ng+o65bMmhcqdcHdBYT9Xet+3Yz6DJrbkuqeXAnGEixWxUjms6JOjs4Y/kk0Xfk3TqGF4ebxelAm3mfLkiVi+g==
 ---
+kind: signature
+hmac: 2a813d63b9c6b1c09d014f7af0ef6768a4a6116a51150ae9ac5d0f217a81d0f9
 
-kind: secret
-name: docker_password
-data: oLwclWhPPqNBeQqwfmEE8NaFskc5JpqqnKFQtPehWIGAxBu4qRQjpOA=
-
----
+...
