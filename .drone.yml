@@ -35,11 +35,13 @@ trigger:
 ---
 
 kind: secret
-name: npm_access_token
-data: rSQbczvfaaVKVd52OjsxnEY3xpegiIurF+Loskrf/M1xWCbWr2PT6CpGzVnqIhemiwtG9DPnlQ==
+name: docker_username
+data: cRILPiMnM6n7vPKLMd4cE4b67TYU/5IB+5nW6iXW3ZeKA4pc3vWdug==
 
 ---
-kind: signature
-hmac: 9c24f8a415cc3d81b91f816477666107735103f6fcb6a81d0189a959edd7b11a
 
-...
+kind: secret
+name: docker_password
+data: oLwclWhPPqNBeQqwfmEE8NaFskc5JpqqnKFQtPehWIGAxBu4qRQjpOA=
+
+---
