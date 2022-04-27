@@ -3,126 +3,92 @@ import fetch from 'fetch';
 
 export default class AddressRegisterService extends Service {
   /**
+   * Set the service up with required configuration
+   *
+   * @param {Object} options Options passed to setup the service :
+   * - endpoint: the endpoint to which the calls will be made
+   */
+  setup(options) {
+    this.endpoint = options?.endpoint;
+  }
+
+  /**
    * Suggests addresses from a given string.
    * Via the API of loc.geopunt.be
    *
    * @param {string} fuzzyString The searched address, a fuzzy search will be performed
-   * @returns {AddressSuggestion}
+   * @returns {Array[Object]} The suggested addresses
    */
   async suggest(fuzzyString) {
-    const results = await (
-      await fetch(`/adresses-register/search?query=${fuzzyString}`)
-    ).json();
-    return results.adressen.map(function (result) {
-      return new AddressSuggestion({
-        id: result.ID,
-        street: result.Thoroughfarename,
-        housenumber: result.Housenumber,
-        zipCode: result.Zipcode,
-        municipality: result.Municipality,
-        fullAddress: result.FormattedAddress,
+    if (this.endpoint) {
+      const results = await (
+        await fetch(`${this.endpoint}/search?query=${fuzzyString}`)
+      ).json();
+      return results.adressen.map(function (result) {
+        return {
+          id: result.ID,
+          street: result.Thoroughfarename,
+          housenumber: result.Housenumber,
+          zipCode: result.Zipcode,
+          municipality: result.Municipality,
+          fullAddress: result.FormattedAddress,
+        };
       });
-    });
+    } else {
+      console.warn('Please setup the endpoint before calling this method.');
+    }
   }
 
   /**
    * Finds the addresses matching the suggestion and get all its properties (including its URI)
    * Via the API of https://basisregisters.vlaanderen.be/api
    *
-   * @param {AddressSuggestion} suggestion The suggested address
-   * @returns {Array[Address]}
+   * @param {Object} suggestion The suggested address
+   * @returns {Array[Object]} The found addresses
    */
   async findAll(suggestion) {
-    let addresses = [];
-    if (!suggestion.isEmpty()) {
-      const results = await (
-        await fetch(
-          `/adresses-register/match?municipality=${suggestion.municipality}&zipcode=${suggestion.zipCode}&thoroughfarename=${suggestion.street}&housenumber=${suggestion.housenumber}`
-        )
-      ).json();
-      addresses = results.map(function (result) {
-        return new Address({
-          uri: result.identificator.id,
-          addressRegisterId: result.identificator.objectId,
-          fullAddress: result.volledigAdres.geografischeNaam.spelling,
-          street: suggestion.street,
-          housenumber: suggestion.housenumber,
-          busNumber: result.busnummer ? result.busnummer : null,
-          zipCode: suggestion.zipCode,
-          municipality: suggestion.municipality,
+    if (this.endpoint) {
+      let addresses = [];
+      if (!this.isEmpty(suggestion)) {
+        const results = await (
+          await fetch(
+            `${this.endpoint}/match?municipality=${suggestion.municipality}&zipcode=${suggestion.zipCode}&thoroughfarename=${suggestion.street}&housenumber=${suggestion.housenumber}`
+          )
+        ).json();
+        addresses = results.map(function (result) {
+          return {
+            uri: result.identificator.id,
+            addressRegisterId: result.identificator.objectId,
+            fullAddress: result.volledigAdres.geografischeNaam.spelling,
+            street: suggestion.street,
+            housenumber: suggestion.housenumber,
+            busNumber: result.busnummer ? result.busnummer : null,
+            zipCode: suggestion.zipCode,
+            municipality: suggestion.municipality,
+          };
         });
-      });
+      }
+      return addresses;
+    } else {
+      console.warn('Please setup the endpoint before calling this method.');
     }
-    return addresses;
   }
 
   /**
-   * Changes an address into an address suggestion
+   * Evaluates if an address is empty or not
    *
-   * @param {Address} address The address to transform into an addres suggestion
-   * @returns {AddressSuggestion}
+   * @param {Object} address The address to evaluate
+   * @returns {boolean}
    */
-  toAddressSuggestion(address) {
-    return new AddressSuggestion({
-      street: address.street,
-      housenumber: address.number,
-      busNumber: address.boxNumber,
-      zipCode: address.postcode,
-      municipality: address.municipality,
-      fullAddress: address.fullAddress,
-    });
-  }
-}
-
-class AddressSuggestion {
-  constructor({
-    id,
-    street,
-    housenumber,
-    busNumber,
-    zipCode,
-    municipality,
-    fullAddress,
-  }) {
-    this.addressRegisterId = id;
-    this.street = street;
-    this.housenumber = housenumber;
-    this.zipCode = zipCode;
-    this.municipality = municipality;
-    this.fullAddress = fullAddress;
-    this.busNumber = busNumber;
-  }
-
-  isEmpty() {
+  isEmpty(address) {
     return (
-      !this.addressRegisterId &&
-      !this.street &&
-      !this.housenumber &&
-      !this.zipCode &&
-      !this.municipality &&
-      !this.fullAddress
+      !address.uri &&
+      !address.addressRegisterId &&
+      !address.street &&
+      !address.housenumber &&
+      !address.zipCode &&
+      !address.municipality &&
+      !address.fullAddress
     );
-  }
-}
-
-class Address {
-  constructor({
-    addressRegisterId,
-    uri,
-    street,
-    housenumber,
-    busNumber,
-    zipCode,
-    municipality,
-    fullAddress,
-  }) {
-    this.uri = uri;
-    this.addressRegisterId = addressRegisterId;
-    this.street = street;
-    this.housenumber = housenumber;
-    this.busNumber = busNumber;
-    this.zipCode = zipCode;
-    this.municipality = municipality;
-    this.fullAddress = fullAddress;
   }
 }
