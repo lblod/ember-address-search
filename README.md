@@ -19,43 +19,24 @@ The addon can be used by importing the following service in your controller:
 
 ### Methods
 
-The service provides the following methods:
-- `suggest(fuzzyString)`: does a fuzzy search based on a given string. Returns an `AddressSuggestion`.
-- `findAll(suggestion)`: tries to find all the addresses matching a suggestion. Returns an array of `Address`.
-- `toAddressSuggestion(address)`: turns an `Address` into an `AddressSuggetion`.
-
-### Classes
-
-The service manipulates two classes. 
-
-**AddressSuggestion**
-  ```
-  const addressSuggestion = new AddressSuggestion({
-    addressRegisterId,
-    street,
-    housenumber,
-    busNumber,
-    zipCode,
-    municipality,
-    fullAddress,
-  });
-
-  const isAddressSuggstionEmpty = addressSuggestion.isEmpty();
-  ```
-
-**Address**
+The addresses described below are objects with the following properties :
 ```
-const address = new Address({
-  uri,
+{
+  uri, // only after `findAll`
   addressRegisterId,
+  fullAddress,
   street,
   housenumber,
   busNumber,
   zipCode,
-  municipality,
-  fullAddress,
-});
+  municipality
+}
 ```
+
+The service provides the following methods:
+- `suggest(fuzzyString)`: does a fuzzy search based on a given string. Returns an array of addresses.
+- `findAll(suggestion)`: tries to find all the addresses matching a suggestion. Returns an array of addresses.
+- `isEmpty(address)`: returns `true` if the address is empty, `false` otherwise.
 
 ## Roadmap
 
