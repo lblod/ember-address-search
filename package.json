@@ -1,13 +1,16 @@
 {
   "name": "@lblod/ember-address-search",
   "version": "0.0.3",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Addon that provides a service to search for addresses",
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lblod/ember-address-search.git"
+  },
   "license": "MIT",
-  "author": "",
+  "author": "redpencil.io",
   "directories": {
     "doc": "doc",
     "test": "tests"
