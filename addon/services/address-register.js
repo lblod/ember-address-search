@@ -24,9 +24,10 @@ export default class AddressRegisterService extends Service {
       const results = await (
         await fetch(`${this.endpoint}/search?query=${fuzzyString}`)
       ).json();
+
       return results.adressen.map(function (result) {
         return {
-          id: result.ID,
+          addressRegisterId: result.ID,
           street: result.Thoroughfarename,
           housenumber: result.Housenumber,
           zipCode: result.Zipcode,
@@ -36,6 +37,7 @@ export default class AddressRegisterService extends Service {
       });
     } else {
       console.warn('Please setup the endpoint before calling this method.');
+      return null;
     }
   }
 
@@ -55,6 +57,7 @@ export default class AddressRegisterService extends Service {
             `${this.endpoint}/match?municipality=${suggestion.municipality}&zipcode=${suggestion.zipCode}&thoroughfarename=${suggestion.street}&housenumber=${suggestion.housenumber}`
           )
         ).json();
+
         addresses = results.map(function (result) {
           return {
             uri: result.identificator.id,
@@ -71,6 +74,7 @@ export default class AddressRegisterService extends Service {
       return addresses;
     } else {
       console.warn('Please setup the endpoint before calling this method.');
+      return null;
     }
   }
 
@@ -81,14 +85,18 @@ export default class AddressRegisterService extends Service {
    * @returns {boolean}
    */
   isEmpty(address) {
-    return (
-      !address.uri &&
-      !address.addressRegisterId &&
-      !address.street &&
-      !address.housenumber &&
-      !address.zipCode &&
-      !address.municipality &&
-      !address.fullAddress
-    );
+    if (address) {
+      return (
+        !address.uri &&
+        !address.addressRegisterId &&
+        !address.street &&
+        !address.housenumber &&
+        !address.zipCode &&
+        !address.municipality &&
+        !address.fullAddress
+      );
+    } else {
+      return true;
+    }
   }
 }
