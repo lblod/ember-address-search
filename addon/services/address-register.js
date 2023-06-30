@@ -69,7 +69,7 @@ export default class AddressRegisterService extends Service {
             busNumber: result.busnummer ? result.busnummer : null,
             zipCode: suggestion.zipCode,
             municipality: suggestion.municipality,
-            country: suggestion.land ? suggestion.land : null,
+            country: result.land ? result.land : null,
           };
         });
       }
