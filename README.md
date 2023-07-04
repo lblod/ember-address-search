@@ -29,7 +29,8 @@ The addresses described below are objects with the following properties :
   housenumber,
   busNumber,
   zipCode,
-  municipality
+  municipality,
+  country
 }
 ```
 
