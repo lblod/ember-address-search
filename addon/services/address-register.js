@@ -33,6 +33,7 @@ export default class AddressRegisterService extends Service {
           zipCode: result.Zipcode,
           municipality: result.Municipality,
           fullAddress: result.FormattedAddress,
+          country: result.Country,
         };
       });
     } else {
@@ -68,6 +69,7 @@ export default class AddressRegisterService extends Service {
             busNumber: result.busnummer ? result.busnummer : null,
             zipCode: suggestion.zipCode,
             municipality: suggestion.municipality,
+            country: result.land ? result.land : null,
           };
         });
       }
@@ -93,6 +95,7 @@ export default class AddressRegisterService extends Service {
         !address.housenumber &&
         !address.zipCode &&
         !address.municipality &&
+        !address.country &&
         !address.fullAddress
       );
     } else {
