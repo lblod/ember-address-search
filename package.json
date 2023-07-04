@@ -1,6 +1,6 @@
 {
   "name": "@lblod/ember-address-search",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Addon that provides a service to search for addresses",
   "keywords": [
     "ember-addon"
