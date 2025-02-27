@@ -10,14 +10,14 @@
     "test-app"
   ],
   "scripts": {
-    "build": "npm run build --workspace @lblod/ember-address-search",
+    "build": "npm run build --workspace ember-address-search",
     "lint": "npm run lint --workspaces --if-present",
     "lint:fix": "npm run lint:fix --workspaces --if-present",
     "prepare": "npm run build",
     "start": "concurrently \"npm:start:*\" --restart-after 5000 --prefix-colors cyan,white,yellow",
-    "start:addon": "npm start --workspace @lblod/ember-address-search",
+    "start:addon": "npm start --workspace ember-address-search",
     "start:test-app": "npm start --workspace test-app",
-    "test": "npm run test --workspaces --if-present"
+    "test": "npm run test:ember --workspace test-app"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
