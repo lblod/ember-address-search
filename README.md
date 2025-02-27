@@ -44,11 +44,6 @@ The service provides the following methods:
 - `findAll(suggestion)`: tries to find all the addresses matching a suggestion. Returns an array of addresses.
 - `isEmpty(address)`: returns `true` if the address is empty, `false` otherwise.
 
-## Roadmap
-
-- Fix the continuous integration to push new versions to the npm registry. In the meantime, `npm publish` is our friend.
-- If a decision is made to use the same display for address selection across the LBLOD applications, we could create a component using this service in [ember-appuniversum](https://github.com/appuniversum/ember-appuniversum).
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE.md).
