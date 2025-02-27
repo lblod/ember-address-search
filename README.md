@@ -7,7 +7,7 @@ It works together with the backend service [adressenregister-fuzzy-search-servic
 ## Compatibility
 
 - Ember.js v4.12 or above
-- Ember CLI v4.12 or above
+- Embroider or ember-auto-import v2
 
 ## Installation
 
