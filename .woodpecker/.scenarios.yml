@@ -6,7 +6,8 @@ steps:
     image: danlynn/ember-cli:6.2.1-node_22.14
     commands:
       - npm ci
-      - npx ember try:one ${scenario}
+      - npm exec --workspace=test-app -- ember try:one ${scenario} --skip-cleanup
+
 when:
   event:
     - pull_request
