@@ -90,7 +90,7 @@ module('Unit | Service | address-register', function (hooks) {
     assert.ok(service.isEmpty(emptyAddress), 'empty address is declared empty');
     assert.notOk(
       service.isEmpty(address),
-      'filled address is declared not empty'
+      'filled address is declared not empty',
     );
   });
 });

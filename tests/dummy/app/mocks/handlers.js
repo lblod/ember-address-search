@@ -36,7 +36,7 @@ export const handlers = [
     } else {
       return res(
         ctx.status(200),
-        ctx.json({ adressen: data, totaalAantal: 3 })
+        ctx.json({ adressen: data, totaalAantal: 3 }),
       );
     }
   }),
