@@ -1,6 +1,7 @@
 matrix:
   scenario:
     - ember-lts-3.28
+    - ember-lts-4.12
 steps:
   - name: ${scenario}
     image: danlynn/ember-cli:4.12.1
