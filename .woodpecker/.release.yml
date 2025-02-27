@@ -1,14 +1,12 @@
 steps:
-  install:
+  release:
     image: node:22.14
     commands:
       - npm ci
-  release:
-    image: plugins/npm
-    settings:
-      token:
-        from_secret: npm_access_token
-      folder: ./ember-address-search
+      - npm config set //registry.npmjs.org/:_authToken $NPM_ACCESS_TOKEN
+      - npm run build
+      - npm publish --workspace ember-address-search
+    secrets: [npm_access_token]
 when:
   event: tag
   ref: refs/tags/v*
