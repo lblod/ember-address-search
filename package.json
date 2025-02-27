@@ -14,7 +14,8 @@
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefixColors auto",
     "start:addon": "npm start --workspace ember-address-search -- --no-watch.clearScreen",
     "start:test-app": "npm start --workspace test-app",
-    "test": "npm run test:ember --workspace test-app"
+    "test": "npm run test:ember --workspace test-app",
+    "release": "npm run release --workspace ember-address-search"
   },
   "packageManager": "npm@11.0.0",
   "devDependencies": {
