@@ -4,7 +4,7 @@ matrix:
     - ember-lts-4.12
 steps:
   - name: ${scenario}
-    image: danlynn/ember-cli:4.12.1
+    image: danlynn/ember-cli:6.2.1-node_22.14
     commands:
       - npm ci
       - npx ember try:one ${scenario}
