@@ -6,8 +6,8 @@ It works together with the backend service [adressenregister-fuzzy-search-servic
 
 ## Compatibility
 
-- Ember.js v3.28 or above
-- Ember CLI v3.28 or above
+- Ember.js v4.12 or above
+- Ember CLI v4.12 or above
 
 ## Installation
 
