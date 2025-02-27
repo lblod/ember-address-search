@@ -1,8 +1,11 @@
 {
   "private": true,
-  "repository": "",
   "license": "MIT",
   "author": "redpencil.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lblod/ember-address-search.git"
+  },
   "scripts": {
     "build": "npm run build --workspace ember-address-search",
     "lint": "npm run lint --workspaces --if-present",
