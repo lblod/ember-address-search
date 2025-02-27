@@ -12,7 +12,7 @@ It works together with the backend service [adressenregister-fuzzy-search-servic
 ## Installation
 
 ```
-ember install @lblod/ember-address-search
+npm install --save-dev @lblod/ember-address-search
 ```
 
 ## Usage
