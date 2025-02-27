@@ -4,6 +4,11 @@ This addon provides methods to get addresses from existing registries.
 
 It works together with the backend service [adressenregister-fuzzy-search-service](https://github.com/lblod/adressenregister-fuzzy-search-service), to which it makes calls to suggest or find addresses.
 
+## Compatibility
+
+- Ember.js v3.28 or above
+- Ember CLI v3.28 or above
+
 ## Installation
 
 ```
