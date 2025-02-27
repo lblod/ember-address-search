@@ -1,13 +1,40 @@
 import Service from '@ember/service';
 
+export type SetupOptions = {
+  endpoint: string;
+};
+
+export type Address = {
+  uri?: string;
+  addressRegisterId?: string;
+  street?: string;
+  housenumber: string;
+  zipCode: string;
+  municipality: string;
+  country: string;
+  fullAddress: string;
+};
+
+type ApiAddress = {
+  ID: string;
+  Thoroughfarename: string;
+  Housenumber: string;
+  Zipcode: string;
+  Municipality: string;
+  FormattedAddress: string;
+  Country: string;
+};
+
 export default class AddressRegisterService extends Service {
+  private endpoint: string = '';
+
   /**
    * Set the service up with required configuration
    *
-   * @param {Object} options Options passed to setup the service :
+   * @param {SetupOptions} options Options passed to setup the service :
    * - endpoint: the endpoint to which the calls will be made
    */
-  setup(options) {
+  setup(options: SetupOptions) {
     this.endpoint = options?.endpoint;
   }
 
@@ -18,21 +45,23 @@ export default class AddressRegisterService extends Service {
    * @param {string} fuzzyString The searched address, a fuzzy search will be performed
    * @returns {Array[Object]} The suggested addresses
    */
-  async suggest(fuzzyString) {
+  async suggest(fuzzyString: string): Promise<Address[] | null> {
     if (this.endpoint) {
-      const results = await (
+      const results: {
+        adressen: ApiAddress[];
+      } = await (
         await fetch(`${this.endpoint}/search?query=${fuzzyString}`)
       ).json();
 
-      return results.adressen.map(function (result) {
+      return results.adressen.map(function (address) {
         return {
-          addressRegisterId: result.ID,
-          street: result.Thoroughfarename,
-          housenumber: result.Housenumber,
-          zipCode: result.Zipcode,
-          municipality: result.Municipality,
-          fullAddress: result.FormattedAddress,
-          country: result.Country,
+          addressRegisterId: address.ID,
+          street: address.Thoroughfarename,
+          housenumber: address.Housenumber,
+          zipCode: address.Zipcode,
+          municipality: address.Municipality,
+          fullAddress: address.FormattedAddress,
+          country: address.Country,
         };
       });
     } else {
@@ -45,14 +74,14 @@ export default class AddressRegisterService extends Service {
    * Finds the addresses matching the suggestion and get all its properties (including its URI)
    * Via the API of https://basisregisters.vlaanderen.be/api
    *
-   * @param {Object} suggestion The suggested address
-   * @returns {Array[Object]} The found addresses
+   * @param suggestion The suggested address
+   * @returns The found addresses
    */
-  async findAll(suggestion) {
+  async findAll(suggestion: Address): Promise<Address[] | null> {
     if (this.endpoint) {
-      let addresses = [];
+      let addresses: Address[] = [];
       if (!this.isEmpty(suggestion)) {
-        const results = await (
+        const results: ApiAddress[] = await (
           await fetch(
             `${this.endpoint}/match?municipality=${suggestion.municipality}&zipcode=${suggestion.zipCode}&thoroughfarename=${suggestion.street}&housenumber=${suggestion.housenumber}`,
           )
@@ -82,10 +111,10 @@ export default class AddressRegisterService extends Service {
   /**
    * Evaluates if an address is empty or not
    *
-   * @param {Object} address The address to evaluate
+   * @param {Address} address The address to evaluate
    * @returns {boolean}
    */
-  isEmpty(address) {
+  isEmpty(address: Address) {
     if (address) {
       return (
         !address.uri &&
