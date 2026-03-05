@@ -5,8 +5,11 @@ steps:
       - npm ci
       - npm config set //registry.npmjs.org/:_authToken $NPM_ACCESS_TOKEN
       - npm run build
-      - npm publish --workspace ember-address-search
-    secrets: [npm_access_token]
+      - npm publish
+    environment:
+      NPM_ACCESS_TOKEN:
+        from_secret: npm_access_token
+
 when:
   event: tag
   ref: refs/tags/v*
