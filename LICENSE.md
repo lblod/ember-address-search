@@ -1,4 +1,4 @@
-MIT License
+The MIT License (MIT)
 
 Copyright 2022 Vlaamse Overheid
 

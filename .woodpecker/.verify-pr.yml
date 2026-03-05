@@ -9,7 +9,6 @@ steps:
       - npm run lint
   test:
     image: danlynn/ember-cli:6.2.1-node_22.14
-    group: check
     commands:
       - npm run test
 when:
